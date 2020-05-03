@@ -1,0 +1,33 @@
+version: '3'
+services:
+  dbos:
+    image: mysql:5.7
+    volumes:
+      - mysql_storage:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: akansh028 
+      MYSQL_USER: akanshag
+      MYSQL_PASSWORD: akansh028
+      MYSQL_DATABASE: mydb
+
+  joomlaos:
+    image: joomla:latest
+    restart: always
+    depends_on: 
+      - dbos
+    ports:
+      - 8888:80
+    environment:
+      JOOMLA_DB_HOST: dbos
+      JOOMLA_DB_USER: akanshag
+      JOOMLA_DB_PASSWORD: akansh028
+      JOOMLA_DB_NAME: mydb
+    volumes:
+      - joomla_storage:/var/www/html
+
+volumes:
+  joomla_storage:
+  mysql_storage:
+
+
